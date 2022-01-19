@@ -5,6 +5,7 @@ import scipy.interpolate as itp
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+from utils.pt import *
 
 def printmain(EFpoints_df):
     print(
@@ -225,161 +226,38 @@ def getphimean_zslice(df_main, z_list= None,
         df_meanfield = pd.DataFrame({'r2':rr2.ravel(), 'z':zz.ravel(), 'Ex':Ex_mean.ravel('F') ,
                                      'Ey':Ey_mean.ravel('F') , 'Ez':Ez_mean.ravel('F') , 'Phi':Phi_mean.ravel('F') ,
                                      'Emod':Emod_mean.ravel('F') }) # Why is it inverted and have to use 'F' ordering?? No idea...
+        
         return df_meanfield
 
-def make_streamline(func_3d,start, dL=0.1,
-                    active_boundaries = (0,664,-1480.3,-11),
-                    v = False,output = None):
-    '''Function to compute the streamline of the Electric field 
-    from a specific point. Finishes when the "electron" gets
-    out of the active volume, default to cylindrical nT TPC.
-    
-    Parameters:
-      * func_3d - list of 3D interpolative functions to consider
-      (Ex_3d,Ey_3d,Ez_3d,Emod_3d)
-      * start - (x,y,z) point where to start the computation
-      * active_boundaries - where to stop computation. Defaults
-      to the nT active volume cylinder.
-      * v - verbose level
-      * output - str with type of output desired: 
-          - 'streamline': return pd.DataFrame with each entry a 
-          computed point along the path
-          - 'change': returns a np.array containing the correction
-          in r,theta,z from the inital position to the corrected one. 
-          The z is the length of the path plus the distance from 
-          the last z_slice computed in the 3d functions.
-          - 'None': returns the corrected position of the given point.
-    Returns:
-      * Depends on the 'output' parameters (see above).'''
-    
-    #Get streamline:
-    #     Define starting r
-    #     Calculate n= E/|E|
-    #     Calculate r' = r + ndL
-    #     Save r' in array or df
-    #     Check if r' is still inside TPC. if not -> finish
-    #     Update r = r'
-    
-    #TO DO:
-    #     Check if it's stalling, log and coninue. Rigth now
-    # it just never finishes...
-    
-    _counter = 0
-    L = 0
-    Ex_3d,Ey_3d,Ez_3d,Emod_3d = func_3d
-    start_r = get_radius(start[0],start[1])
-    if output == 'streamline':
-        df_streamline = pd.DataFrame({'x':[start[0]],
-                                      'y':[start[1]],
-                                      'z':[start[2]],
-                                      'Ex':[Ex_3d(start)],
-                                      'Ey':[Ey_3d(start)],
-                                      'Ez':[Ez_3d(start)],
-                                      'Emod':[Emod_3d(start)],
-                                      'r':start_r
-                                     }
-                                    )
-    
-    _r = np.array(start)
-    out_of_bounds = False
-    while out_of_bounds == False:
-        
-        _r_next = get_next_r_streamline(_r,func_3d, dL,direction = -1)
-        L += get_lenght_drifted(_r, _r_next)
-        
-        assert (~np.isnan(_r_next).any()),\
-        'Lost the electron (computed fields is nan) at %s. Goodbye.'%(_r)
-        
-        _r_next_radius = get_radius(_r_next[0],_r_next[1])
 
-        if output == 'streamline':
-            df_streamline = df_streamline.append({'x':_r_next[0],
-                                                  'y':_r_next[1],
-                                                  'z':_r_next[2],
-                                                  'Ex':np.float64(Ex_3d(_r_next)),
-                                                  'Ey':np.float64(Ey_3d(_r_next)),
-                                                  'Ez':np.float64(Ez_3d(_r_next)),
-                                                  'Emod':np.float64(Emod_3d(_r_next)),
-                                                  'r':_r_next_radius
-                                                 }, ignore_index=True)
-        
-        out_of_bounds_gate, out_of_bounds_wall = bool_out_of_bounds(_r_next_radius,_r_next[2], active_boundaries)
-        out_of_bounds = out_of_bounds_gate or out_of_bounds_wall
-        if (out_of_bounds != False) and (v != False):
-            print('The electron bumped into mean stuff and quit. Goodbye.')
-        
-        _counter+=1
-        
-        if (v !=False) and (_counter%10== 0):
-            print('Current position(x,y,r,z): %.2f, %.2f, %.2f , %.2f' %(_r_next[0],_r_next[1],_r_next_radius, _r_next[2]))
-        _r = _r_next
-        
-    if (out_of_bounds_wall == True) and (v!=False):
-        print('Electron lost on wall.')
-        
-    if output == 'streamline':
-        return df_streamline
+def get_interp_functions(df_regulargrid):
+    '''Returns the continuous accessible 3d functions for Ex, Ey, Ez, 
+    Emod and Phi. These functions are interpolated from the given points
+    of df (need a regular grid)'''
+
+    N_x = len(np.unique(df_regulargrid.x))
+    N_y = len(np.unique(df_regulargrid.y))
+    N_z = len(np.unique(df_regulargrid.z))
+    xxx = np.array(df_regulargrid.x).reshape(N_x,N_y,N_z)
+    yyy = np.array(df_regulargrid.y).reshape(N_x,N_y,N_z)
+    zzz = np.array(df_regulargrid.z).reshape(N_x,N_y,N_z)
+    Ex = np.array(df_regulargrid.Ex).reshape(N_x,N_y,N_z)
+    Ey = np.array(df_regulargrid.Ey).reshape(N_x,N_y,N_z)
+    Ez = np.array(df_regulargrid.Ez).reshape(N_x,N_y,N_z)
+    Phi_array = np.array(df_regulargrid.Phi).reshape(N_x,N_y,N_z)
+    Emod_array = np.array(np.sqrt(np.power(df_regulargrid.Ex,2) + 
+                                np.power(df_regulargrid.Ey,2) + 
+                                np.power(df_regulargrid.Ez,2))).reshape(N_x,N_y,N_z)
     
-    if output == 'change':
-        if out_of_bounds_wall == True:
-            return np.array([np.nan, np.nan,np.nan])
-        else:
-            r_change = get_radius(_r[0],_r[1]) - start_r
-            theta_change = get_theta(_r[0],_r[1]) - get_theta(start[0], start[1])
-            z_change = -((L + 12) - np.abs(start[2])) # go around due to z value missing from -11 upward #_r[2] - start[2]
-            return np.array([r_change, theta_change, z_change],dtype = np.float32)
+    Phi_3d = itp.RegularGridInterpolator((xxx[:,0,0], yyy[0,:,0], zzz[0,0,:]), Phi_array,bounds_error=False, fill_value=np.nan)
+    Emod_3d = itp.RegularGridInterpolator((xxx[:,0,0], yyy[0,:,0], zzz[0,0,:]), Emod_array,bounds_error=False, fill_value=np.nan)
+    Ex_3d = itp.RegularGridInterpolator((xxx[:,0,0], yyy[0,:,0], zzz[0,0,:]), Ex,bounds_error=False, fill_value=np.nan)
+    Ey_3d = itp.RegularGridInterpolator((xxx[:,0,0], yyy[0,:,0], zzz[0,0,:]), Ey,bounds_error=False, fill_value=np.nan)
+    Ez_3d = itp.RegularGridInterpolator((xxx[:,0,0], yyy[0,:,0], zzz[0,0,:]), Ez,bounds_error=False, fill_value=np.nan)
+    Phi_3d.name = 'Phi'
+    Emod_3d.name = 'Emod'
+    Ex_3d.name = 'Ex'
+    Ey_3d.name = 'Ey'
+    Ez_3d.name = 'Ez'
     
-    else:
-        if out_of_bounds_wall == True:
-            return np.array([np.nan, np.nan,np.nan])
-        else:
-            _x_end = _r[0]
-            _y_end = _r[1]
-            _L_end = -(L + 12)
-            return np.array([_x_end,_y_end,_L_end],dtype = np.float32)
-
-
-def get_lenght_drifted(r_before, r_after):
-    r_diff = r_after-r_before
-    dist = np.linalg.norm(r_diff)
-    return dist
-
-def get_theta(x,y):
-    theta = np.arctan(y/x)
-    if (x < 0) and (y < 0):
-        theta = -theta
-    return theta
-
-def get_radius(x,y):
-    _r = np.sqrt(np.power(x,2) + np.power(y,2))
-    return _r
-
-def get_xy(r, theta):
-    _x = r * np.cos(theta)
-    _y = r * np.sin(theta)
-    return _x,_y
-
-def bool_out_of_bounds(r,z, active_boundaries):
-    '''Is this pos out of bounds and where from?
-       - Reached the gate: (True, ??)
-       - Lost on wall: (False, True)
-       - No: (False,False)'''
-    ans_gate = z > active_boundaries[3]
-    ans_wall = ((r < active_boundaries[0]) or 
-                (r > active_boundaries[1]))
-    
-    return (ans_gate, ans_wall)
-
-def get_next_r_streamline(_r,func_3d,dL,direction):
-    Ex_3d,Ey_3d,Ez_3d,Emod_3d = func_3d
-    
-    #get field at specific point
-    _Ex,_Ey,_Ez,_Emod = Ex_3d(_r),Ey_3d(_r),Ez_3d(_r),Emod_3d(_r)
-    _Emod = np.linalg.norm(np.array([_Ex,_Ey,_Ez]))
-    #calculate **n**
-    n_x = _Ex/_Emod
-    n_y = _Ey/_Emod
-    n_z = _Ez/_Emod
-    n_vec = np.concatenate((n_x,n_y,n_z))
-    _r_next = _r + n_vec * dL * direction
-    return _r_next
+    return Ex_3d,Ey_3d,Ez_3d,Emod_3d, Phi_3d
