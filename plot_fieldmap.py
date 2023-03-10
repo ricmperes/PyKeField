@@ -64,7 +64,7 @@ def plot_xy(x,y,series_to_plot, acc_grid = False, title = None,TPC_line = True):
     plt.draw()
     plt.show()
 
-    def get_axis_3d_paralelepipedo(ax,x_min,x_max,y_min,y_max,z_min,z_max, color = 'grey',alpha = 0.2, lines = True):
+def get_axis_3d_paralelepipedo(ax,x_min,x_max,y_min,y_max,z_min,z_max, color = 'grey',alpha = 0.2, lines = True):
     
     x_region = np.linspace(x_min,x_max,2)
     y_region = np.linspace(y_min,y_max,2)

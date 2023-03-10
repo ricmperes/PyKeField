@@ -5,7 +5,7 @@ import scipy.interpolate as itp
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-from utils.pt import *
+from PyKeField.utils import *
 
 def printmain(EFpoints_df):
     print(

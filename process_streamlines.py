@@ -5,7 +5,7 @@ import scipy.interpolate as itp
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-from utils.pt import *
+from PyKeField.utils import *
 
 def make_streamline(func_3d,start, dL=0.1,
                     active_boundaries = (0,664,-1480.3,-11),

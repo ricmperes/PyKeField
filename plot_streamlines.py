@@ -101,7 +101,7 @@ def plot_streamlines(stream_list, region = None):
 
     plt.show()
 
-    def get_anode_wires_y(y_min, y_max, y_reference_anode = -0.01304*1000):
+def get_anode_wires_y(y_min, y_max, y_reference_anode = -0.01304*1000):
     '''Returns the y coordinates of the anode wires from a 
     given y_min up to a given y_max. The reference point
     was taken directly form the mesh file by hand.
