@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pykefield.process_fieldmap API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pykefield.process_fieldmap</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import scipy.interpolate as itp
+from tqdm import tqdm
+
+
+def get_finergrid_zslice(df_main, z_value, xx, yy,
+                         z_band=0.01, plot_diff=False):
+    &#39;&#39;&#39;This function uses the method scipy.interpolate.Griddata
+    to get the Phi values in a finer grid than in the output fo the
+    simulation. Needs scipy.interpolate imported as itp.
+
+    Parameters:
+        df_main - a pd.DataFrame with at least x,y,z and Phi columns.
+        z_value - z value of the slices to consider.
+        xx,yy - coordenates, in np.meshgrid form, of the points to compute
+        z_band - the minimal distance between z slices in df_main for the
+    mask to select only one
+        plot_diff = prints a plot showing the before and after. Not adaptative,
+    difference may not be noticeable
+
+    Returns the Phi values on the final_grid coordenates.
+    &#39;&#39;&#39;
+    # mask z_slice
+    mask = (df_main.z &lt; z_value + z_band) &amp; (df_main.z &gt; z_value - z_band)
+    df = df_main[mask]
+    # Get the initial Phi values
+    vals = df.Phi
+    # Some Phi values are np.nan. Lets mask these
+    vals = np.ma.masked_invalid(vals)
+    # Only the x and y coordinates with valid Phi are considered
+    x_known = np.array(df.x)[~vals.mask]
+    y_known = np.array(df.y)[~vals.mask]
+    vals_known = vals[~vals.mask]
+    interpPhi = itp.griddata((x_known, y_known), vals_known.ravel(),
+                             (xx, yy), method=&#39;cubic&#39;)
+
+    if plot_diff == True:
+        plt.figure(figsize=(16, 8))
+        plt.subplot(121)
+        plt.scatter(x=df.x, y=df.y, c=df.Phi, marker=&#39;s&#39;, s=1)
+        plt.gca().set_aspect(&#39;equal&#39;)
+        plt.colorbar()
+
+        plt.subplot(122)
+        plt.scatter(x=xx, y=yy, c=interpPhi, marker=&#39;s&#39;, s=1)
+        plt.gca().set_aspect(&#39;equal&#39;)
+        plt.colorbar()
+
+        plt.show()
+
+    return interpPhi
+
+
+def get_EField_zslice(df_main, z_list=None,
+                      xygridspecs=(-664, 664, 100, -664, 664, 100),
+                      plot_interp=False, plot_PhiE=False, plot_N=5,
+                      return_all=False):
+    &#39;&#39;&#39;Function to process the Electric Potential values to get the
+    Electric Field values. Makes use of np.gradient method. Returns
+    both the 3D grid values for x,y,z, Phi values in that grid and
+    field values on the grid (Ex,Ey,Ez).
+
+    Arguments:
+        * df_main - a pd.DataFrame with at least x,y,z and Phi columns.
+        * z_list - list of z values to consider.
+        * xygridspecs - a tuple of the form (x_min, x_max, x_nb, y_min,
+    y_max, y_nb), defaults to (-664,664,100,-664,664,100)
+        * plot_interp - boolean. Default False, if true plots initial
+    and final xy grid, colored with Phi values for each z slice.
+        * plt_PhiE - boolean. Defaults to False, if true plots side by
+    side the Phi and |E| scatter plots for plot_N z slices (at least
+    first and last).
+
+    Returns:
+        * pd.DataFrame with each row being a interpolated point.
+    Columns: x,y,z,r2,Phi,Ex,Ey,Ez,E_mod
+    &#39;&#39;&#39;
+    x_min, x_max, x_nb, y_min, y_max, y_nb = xygridspecs
+
+    _x = np.linspace(x_min, x_max, x_nb)
+    _y = np.linspace(y_min, y_max, y_nb)
+    if z_list is not None:
+        _z = z_list
+    else:
+        _z = np.unique(df_main.z)
+
+    xx, yy = np.meshgrid(_x, _y, indexing=&#39;ij&#39;)
+    xxx, yyy, zzz = np.meshgrid(_x, _y, _z, indexing=&#39;ij&#39;)
+
+    Phi_array = np.zeros((len(_x), len(_y), len(_z)))
+
+    for z_n, z_value in tqdm(enumerate(_z),
+                             &#39;Computing Phi values in each z_slice&#39;,
+                             total=len(_z)):
+        corrected_Phi = get_finergrid_zslice(df_main=df_main, z_value=z_value,
+                                             xx=xx, yy=yy, plot_diff=plot_interp)
+        Phi_array[:, :, z_n] = corrected_Phi
+
+    Ex, Ey, Ez = np.gradient(Phi_array, _x, _y, _z)
+    Ex = -Ex
+    Ey = -Ey
+    Ez = -Ez
+    Emod_array = np.sqrt(np.power(Ex, 2) + np.power(Ey, 2) + np.power(Ez, 2))
+
+    if plot_PhiE == True:
+        if plot_N &lt; 2:
+            plot_N = 2
+
+        plot_n = [0] + np.random.randint(1,
+                                         len(_z),
+                                         plot_N - 2).tolist() + [len(_z) - 1]
+        for _n in plot_n:
+            fig = plt.figure(figsize=(20, 8))
+
+            plt.subplot(122)
+            plt.scatter(xxx[:, :, _n].ravel(), yyy[:, :, _n].ravel(
+            ), c=Emod_array[:, :, _n].ravel(), marker=&#39;s&#39;, s=3)
+            plt.colorbar(label=&#39;V/m&#39;)
+            plt.gca().set_aspect(&#39;equal&#39;)
+            plt.title(&#39;|E|&#39;)
+
+            plt.subplot(121)
+            plt.scatter(xxx[:, :, _n].ravel(), yyy[:, :, _n].ravel(
+            ), c=Phi_array[:, :, _n].ravel(), marker=&#39;s&#39;, s=3)
+            plt.colorbar(label=&#39;V&#39;)
+            plt.gca().set_aspect(&#39;equal&#39;)
+            plt.title(&#39;Phi&#39;)
+
+            fig.suptitle(&#39;z = %.2f mm&#39; % zzz[0, 0, _n], fontsize=24)
+
+            plt.show()
+
+    if return_all == True:
+        return xxx, yyy, zzz, Phi_array, Ex, Ey, Ez, Emod_array
+    else:
+        # Put everything in a pd.DataFrame
+        df_field = pd.DataFrame({&#39;x&#39;: xxx.ravel(), &#39;y&#39;: yyy.ravel(), &#39;z&#39;: zzz.ravel(),
+                                 &#39;Phi&#39;: Phi_array.ravel(), &#39;Ex&#39;: Ex.ravel(), &#39;Ey&#39;: Ey.ravel(),
+                                 &#39;Ez&#39;: Ez.ravel(), &#39;E_mod&#39;: Emod_array.ravel()})
+
+        df_field[&#39;r2&#39;] = np.power(df_field.x, 2) + np.power(df_field.y, 2)
+        return df_field
+
+
+def getphimean_zslice(df_main, z_list=None,
+                      r2zgridspecs=(0., 666.**2, 200),
+                      return_all=False):
+    &#39;&#39;&#39;Given a data frame witht he EF and Phi calculated in a set of
+    points (grid, preferably), returns the correspondent 2D mean values
+    in R2Z space in a dataset.
+
+    Arguments:
+      * df_main - the pd.DataFrame with r2,z,Ex,Ey,Ez,E_mod,Phi.
+      * z_list - list of z value to consider. distance more than 0.1mm or
+      does not handle correctly.
+      * r2gridspecs - a tuple with (r2_min,r2_max,r2_nb), z values are
+      taken seperatly in z_list or all z slices in df_main considered.
+
+    Returns:
+      * pd.DataFrame with r2, z, Ex[mean],Ey[mean],Ez[mean],Emod[mean],Phi[mean]
+    &#39;&#39;&#39;
+
+    # To make the rz (scatter) plot one needs the mean value of the Phi/Emod in each (r,z) coordinate instead of
+    # the individual values at each (x,y,z)
+    # We can do this by defining a grid on r,z, selecting events in each square and getting the mean.
+    # This is, however, an iterative process, not sure how to make it
+    # array-like.
+
+    # In this particular case, since the z variable is always sliced and not interpolated, only r will be
+    # re-descretized, the z slices wil be taken as the z values to compute on
+
+    r2_min, r2_max, r2_nb = r2zgridspecs
+    r2_step = (r2_max - r2_min) / r2_nb
+    r2_vals_mean = np.linspace(r2_min, r2_max, r2_nb) + \
+        np.ones(r2_nb) * r2_step / 2
+    z_vals_mean = np.unique(df_main.z)
+
+    # make the grid
+    rr2, zz = np.meshgrid(r2_vals_mean, z_vals_mean)
+
+    # initialize mean arrays
+    Emod_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Emod_mean[:] = np.nan
+    Phi_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Phi_mean[:] = np.nan
+    Ex_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ex_mean[:] = np.nan
+    Ey_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ey_mean[:] = np.nan
+    Ez_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ez_mean[:] = np.nan
+
+    # Main loop. Could it be done in array mode? Maybe, but this works and is not too slow
+    # UPDATE: It&#39;s definetly too slow, needs improvement!! (14.07.2020)
+    for _z_idx, _z in tqdm(enumerate(z_vals_mean[:-1]),
+                           &#39;Computing mean values of Field and Phi in 2D projection&#39;,
+                           total=len(z_vals_mean[:-1])):
+        for _r2_idx, _r2 in enumerate(r2_vals_mean):
+            _mask = (
+                df_main.r2 &gt;= _r2 -
+                r2_step /
+                2) &amp; (
+                df_main.r2 &lt; _r2 +
+                r2_step /
+                2) &amp; (
+                df_main.z &gt; _z -
+                0.01) &amp; (
+                df_main.z &lt; _z +
+                0.01)
+            _df = df_main[_mask]
+
+            Ex_mean[_r2_idx, _z_idx] = np.mean(_df.Ex)
+            Ey_mean[_r2_idx, _z_idx] = np.mean(_df.Ey)
+            Ez_mean[_r2_idx, _z_idx] = np.mean(_df.Ez)
+            Emod_mean[_r2_idx, _z_idx] = np.mean(_df.E_mod)
+            Phi_mean[_r2_idx, _z_idx] = np.mean(_df.Phi)
+    if return_all == True:
+        return rr2, zz, Ex_mean, Ey_mean, Ez_mean, Emod_mean, Phi_mean
+    else:
+        # Get everything in a pd.DataFrame because they&#39;re cool and ezpz
+        df_meanfield = pd.DataFrame({&#39;r2&#39;: rr2.ravel(), &#39;z&#39;: zz.ravel(), &#39;Ex&#39;: Ex_mean.ravel(&#39;F&#39;),
+                                     &#39;Ey&#39;: Ey_mean.ravel(&#39;F&#39;), &#39;Ez&#39;: Ez_mean.ravel(&#39;F&#39;), &#39;Phi&#39;: Phi_mean.ravel(&#39;F&#39;),
+                                     &#39;Emod&#39;: Emod_mean.ravel(&#39;F&#39;)})  # Why is it inverted and have to use &#39;F&#39; ordering?? No idea...
+
+        return df_meanfield
+
+
+def get_interp_functions(df_regulargrid):
+    &#39;&#39;&#39;Returns the continuous accessible 3d functions for Ex, Ey, Ez,
+    Emod and Phi. These functions are interpolated from the given points
+    of df (need a regular grid)&#39;&#39;&#39;
+
+    N_x = len(np.unique(df_regulargrid.x))
+    N_y = len(np.unique(df_regulargrid.y))
+    N_z = len(np.unique(df_regulargrid.z))
+    xxx = np.array(df_regulargrid.x).reshape(N_x, N_y, N_z)
+    yyy = np.array(df_regulargrid.y).reshape(N_x, N_y, N_z)
+    zzz = np.array(df_regulargrid.z).reshape(N_x, N_y, N_z)
+    Ex = np.array(df_regulargrid.Ex).reshape(N_x, N_y, N_z)
+    Ey = np.array(df_regulargrid.Ey).reshape(N_x, N_y, N_z)
+    Ez = np.array(df_regulargrid.Ez).reshape(N_x, N_y, N_z)
+    Phi_array = np.array(df_regulargrid.Phi).reshape(N_x, N_y, N_z)
+    Emod_array = np.array(np.sqrt(np.power(df_regulargrid.Ex, 2) +
+                                  np.power(df_regulargrid.Ey, 2) +
+                                  np.power(df_regulargrid.Ez, 2))).reshape(N_x, N_y, N_z)
+
+    Phi_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Phi_array, bounds_error=False, fill_value=np.nan)
+    Emod_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Emod_array, bounds_error=False, fill_value=np.nan)
+    Ex_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ex, bounds_error=False, fill_value=np.nan)
+    Ey_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ey, bounds_error=False, fill_value=np.nan)
+    Ez_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ez, bounds_error=False, fill_value=np.nan)
+    Phi_3d.name = &#39;Phi&#39;
+    Emod_3d.name = &#39;Emod&#39;
+    Ex_3d.name = &#39;Ex&#39;
+    Ey_3d.name = &#39;Ey&#39;
+    Ez_3d.name = &#39;Ez&#39;
+
+    return Ex_3d, Ey_3d, Ez_3d, Emod_3d, Phi_3d</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pykefield.process_fieldmap.get_EField_zslice"><code class="name flex">
+<span>def <span class="ident">get_EField_zslice</span></span>(<span>df_main, z_list=None, xygridspecs=(-664, 664, 100, -664, 664, 100), plot_interp=False, plot_PhiE=False, plot_N=5, return_all=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to process the Electric Potential values to get the
+Electric Field values. Makes use of np.gradient method. Returns
+both the 3D grid values for x,y,z, Phi values in that grid and
+field values on the grid (Ex,Ey,Ez).</p>
+<h2 id="arguments">Arguments</h2>
+<ul>
+<li>df_main - a pd.DataFrame with at least x,y,z and Phi columns.</li>
+<li>z_list - list of z values to consider.</li>
+<li>xygridspecs - a tuple of the form (x_min, x_max, x_nb, y_min,
+y_max, y_nb), defaults to (-664,664,100,-664,664,100)<ul>
+<li>plot_interp - boolean. Default False, if true plots initial
+and final xy grid, colored with Phi values for each z slice.</li>
+<li>plt_PhiE - boolean. Defaults to False, if true plots side by
+side the Phi and |E| scatter plots for plot_N z slices (at least
+first and last).</li>
+</ul>
+</li>
+</ul>
+<h2 id="returns">Returns</h2>
+<ul>
+<li>pd.DataFrame with each row being a interpolated point.
+Columns: x,y,z,r2,Phi,Ex,Ey,Ez,E_mod</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_EField_zslice(df_main, z_list=None,
+                      xygridspecs=(-664, 664, 100, -664, 664, 100),
+                      plot_interp=False, plot_PhiE=False, plot_N=5,
+                      return_all=False):
+    &#39;&#39;&#39;Function to process the Electric Potential values to get the
+    Electric Field values. Makes use of np.gradient method. Returns
+    both the 3D grid values for x,y,z, Phi values in that grid and
+    field values on the grid (Ex,Ey,Ez).
+
+    Arguments:
+        * df_main - a pd.DataFrame with at least x,y,z and Phi columns.
+        * z_list - list of z values to consider.
+        * xygridspecs - a tuple of the form (x_min, x_max, x_nb, y_min,
+    y_max, y_nb), defaults to (-664,664,100,-664,664,100)
+        * plot_interp - boolean. Default False, if true plots initial
+    and final xy grid, colored with Phi values for each z slice.
+        * plt_PhiE - boolean. Defaults to False, if true plots side by
+    side the Phi and |E| scatter plots for plot_N z slices (at least
+    first and last).
+
+    Returns:
+        * pd.DataFrame with each row being a interpolated point.
+    Columns: x,y,z,r2,Phi,Ex,Ey,Ez,E_mod
+    &#39;&#39;&#39;
+    x_min, x_max, x_nb, y_min, y_max, y_nb = xygridspecs
+
+    _x = np.linspace(x_min, x_max, x_nb)
+    _y = np.linspace(y_min, y_max, y_nb)
+    if z_list is not None:
+        _z = z_list
+    else:
+        _z = np.unique(df_main.z)
+
+    xx, yy = np.meshgrid(_x, _y, indexing=&#39;ij&#39;)
+    xxx, yyy, zzz = np.meshgrid(_x, _y, _z, indexing=&#39;ij&#39;)
+
+    Phi_array = np.zeros((len(_x), len(_y), len(_z)))
+
+    for z_n, z_value in tqdm(enumerate(_z),
+                             &#39;Computing Phi values in each z_slice&#39;,
+                             total=len(_z)):
+        corrected_Phi = get_finergrid_zslice(df_main=df_main, z_value=z_value,
+                                             xx=xx, yy=yy, plot_diff=plot_interp)
+        Phi_array[:, :, z_n] = corrected_Phi
+
+    Ex, Ey, Ez = np.gradient(Phi_array, _x, _y, _z)
+    Ex = -Ex
+    Ey = -Ey
+    Ez = -Ez
+    Emod_array = np.sqrt(np.power(Ex, 2) + np.power(Ey, 2) + np.power(Ez, 2))
+
+    if plot_PhiE == True:
+        if plot_N &lt; 2:
+            plot_N = 2
+
+        plot_n = [0] + np.random.randint(1,
+                                         len(_z),
+                                         plot_N - 2).tolist() + [len(_z) - 1]
+        for _n in plot_n:
+            fig = plt.figure(figsize=(20, 8))
+
+            plt.subplot(122)
+            plt.scatter(xxx[:, :, _n].ravel(), yyy[:, :, _n].ravel(
+            ), c=Emod_array[:, :, _n].ravel(), marker=&#39;s&#39;, s=3)
+            plt.colorbar(label=&#39;V/m&#39;)
+            plt.gca().set_aspect(&#39;equal&#39;)
+            plt.title(&#39;|E|&#39;)
+
+            plt.subplot(121)
+            plt.scatter(xxx[:, :, _n].ravel(), yyy[:, :, _n].ravel(
+            ), c=Phi_array[:, :, _n].ravel(), marker=&#39;s&#39;, s=3)
+            plt.colorbar(label=&#39;V&#39;)
+            plt.gca().set_aspect(&#39;equal&#39;)
+            plt.title(&#39;Phi&#39;)
+
+            fig.suptitle(&#39;z = %.2f mm&#39; % zzz[0, 0, _n], fontsize=24)
+
+            plt.show()
+
+    if return_all == True:
+        return xxx, yyy, zzz, Phi_array, Ex, Ey, Ez, Emod_array
+    else:
+        # Put everything in a pd.DataFrame
+        df_field = pd.DataFrame({&#39;x&#39;: xxx.ravel(), &#39;y&#39;: yyy.ravel(), &#39;z&#39;: zzz.ravel(),
+                                 &#39;Phi&#39;: Phi_array.ravel(), &#39;Ex&#39;: Ex.ravel(), &#39;Ey&#39;: Ey.ravel(),
+                                 &#39;Ez&#39;: Ez.ravel(), &#39;E_mod&#39;: Emod_array.ravel()})
+
+        df_field[&#39;r2&#39;] = np.power(df_field.x, 2) + np.power(df_field.y, 2)
+        return df_field</code></pre>
+</details>
+</dd>
+<dt id="pykefield.process_fieldmap.get_finergrid_zslice"><code class="name flex">
+<span>def <span class="ident">get_finergrid_zslice</span></span>(<span>df_main, z_value, xx, yy, z_band=0.01, plot_diff=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function uses the method scipy.interpolate.Griddata
+to get the Phi values in a finer grid than in the output fo the
+simulation. Needs scipy.interpolate imported as itp.</p>
+<h2 id="parameters">Parameters</h2>
+<p>df_main - a pd.DataFrame with at least x,y,z and Phi columns.
+z_value - z value of the slices to consider.
+xx,yy - coordenates, in np.meshgrid form, of the points to compute
+z_band - the minimal distance between z slices in df_main for the
+mask to select only one
+plot_diff = prints a plot showing the before and after. Not adaptative,
+difference may not be noticeable</p>
+<p>Returns the Phi values on the final_grid coordenates.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_finergrid_zslice(df_main, z_value, xx, yy,
+                         z_band=0.01, plot_diff=False):
+    &#39;&#39;&#39;This function uses the method scipy.interpolate.Griddata
+    to get the Phi values in a finer grid than in the output fo the
+    simulation. Needs scipy.interpolate imported as itp.
+
+    Parameters:
+        df_main - a pd.DataFrame with at least x,y,z and Phi columns.
+        z_value - z value of the slices to consider.
+        xx,yy - coordenates, in np.meshgrid form, of the points to compute
+        z_band - the minimal distance between z slices in df_main for the
+    mask to select only one
+        plot_diff = prints a plot showing the before and after. Not adaptative,
+    difference may not be noticeable
+
+    Returns the Phi values on the final_grid coordenates.
+    &#39;&#39;&#39;
+    # mask z_slice
+    mask = (df_main.z &lt; z_value + z_band) &amp; (df_main.z &gt; z_value - z_band)
+    df = df_main[mask]
+    # Get the initial Phi values
+    vals = df.Phi
+    # Some Phi values are np.nan. Lets mask these
+    vals = np.ma.masked_invalid(vals)
+    # Only the x and y coordinates with valid Phi are considered
+    x_known = np.array(df.x)[~vals.mask]
+    y_known = np.array(df.y)[~vals.mask]
+    vals_known = vals[~vals.mask]
+    interpPhi = itp.griddata((x_known, y_known), vals_known.ravel(),
+                             (xx, yy), method=&#39;cubic&#39;)
+
+    if plot_diff == True:
+        plt.figure(figsize=(16, 8))
+        plt.subplot(121)
+        plt.scatter(x=df.x, y=df.y, c=df.Phi, marker=&#39;s&#39;, s=1)
+        plt.gca().set_aspect(&#39;equal&#39;)
+        plt.colorbar()
+
+        plt.subplot(122)
+        plt.scatter(x=xx, y=yy, c=interpPhi, marker=&#39;s&#39;, s=1)
+        plt.gca().set_aspect(&#39;equal&#39;)
+        plt.colorbar()
+
+        plt.show()
+
+    return interpPhi</code></pre>
+</details>
+</dd>
+<dt id="pykefield.process_fieldmap.get_interp_functions"><code class="name flex">
+<span>def <span class="ident">get_interp_functions</span></span>(<span>df_regulargrid)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the continuous accessible 3d functions for Ex, Ey, Ez,
+Emod and Phi. These functions are interpolated from the given points
+of df (need a regular grid)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_interp_functions(df_regulargrid):
+    &#39;&#39;&#39;Returns the continuous accessible 3d functions for Ex, Ey, Ez,
+    Emod and Phi. These functions are interpolated from the given points
+    of df (need a regular grid)&#39;&#39;&#39;
+
+    N_x = len(np.unique(df_regulargrid.x))
+    N_y = len(np.unique(df_regulargrid.y))
+    N_z = len(np.unique(df_regulargrid.z))
+    xxx = np.array(df_regulargrid.x).reshape(N_x, N_y, N_z)
+    yyy = np.array(df_regulargrid.y).reshape(N_x, N_y, N_z)
+    zzz = np.array(df_regulargrid.z).reshape(N_x, N_y, N_z)
+    Ex = np.array(df_regulargrid.Ex).reshape(N_x, N_y, N_z)
+    Ey = np.array(df_regulargrid.Ey).reshape(N_x, N_y, N_z)
+    Ez = np.array(df_regulargrid.Ez).reshape(N_x, N_y, N_z)
+    Phi_array = np.array(df_regulargrid.Phi).reshape(N_x, N_y, N_z)
+    Emod_array = np.array(np.sqrt(np.power(df_regulargrid.Ex, 2) +
+                                  np.power(df_regulargrid.Ey, 2) +
+                                  np.power(df_regulargrid.Ez, 2))).reshape(N_x, N_y, N_z)
+
+    Phi_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Phi_array, bounds_error=False, fill_value=np.nan)
+    Emod_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Emod_array, bounds_error=False, fill_value=np.nan)
+    Ex_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ex, bounds_error=False, fill_value=np.nan)
+    Ey_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ey, bounds_error=False, fill_value=np.nan)
+    Ez_3d = itp.RegularGridInterpolator(
+        (xxx[:, 0, 0], yyy[0, :, 0], zzz[0, 0, :]), Ez, bounds_error=False, fill_value=np.nan)
+    Phi_3d.name = &#39;Phi&#39;
+    Emod_3d.name = &#39;Emod&#39;
+    Ex_3d.name = &#39;Ex&#39;
+    Ey_3d.name = &#39;Ey&#39;
+    Ez_3d.name = &#39;Ez&#39;
+
+    return Ex_3d, Ey_3d, Ez_3d, Emod_3d, Phi_3d</code></pre>
+</details>
+</dd>
+<dt id="pykefield.process_fieldmap.getphimean_zslice"><code class="name flex">
+<span>def <span class="ident">getphimean_zslice</span></span>(<span>df_main, z_list=None, r2zgridspecs=(0.0, 443556.0, 200), return_all=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Given a data frame witht he EF and Phi calculated in a set of
+points (grid, preferably), returns the correspondent 2D mean values
+in R2Z space in a dataset.</p>
+<h2 id="arguments">Arguments</h2>
+<ul>
+<li>df_main - the pd.DataFrame with r2,z,Ex,Ey,Ez,E_mod,Phi.</li>
+<li>z_list - list of z value to consider. distance more than 0.1mm or
+does not handle correctly.</li>
+<li>r2gridspecs - a tuple with (r2_min,r2_max,r2_nb), z values are
+taken seperatly in z_list or all z slices in df_main considered.</li>
+</ul>
+<h2 id="returns">Returns</h2>
+<ul>
+<li>pd.DataFrame with r2, z, Ex[mean],Ey[mean],Ez[mean],Emod[mean],Phi[mean]</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getphimean_zslice(df_main, z_list=None,
+                      r2zgridspecs=(0., 666.**2, 200),
+                      return_all=False):
+    &#39;&#39;&#39;Given a data frame witht he EF and Phi calculated in a set of
+    points (grid, preferably), returns the correspondent 2D mean values
+    in R2Z space in a dataset.
+
+    Arguments:
+      * df_main - the pd.DataFrame with r2,z,Ex,Ey,Ez,E_mod,Phi.
+      * z_list - list of z value to consider. distance more than 0.1mm or
+      does not handle correctly.
+      * r2gridspecs - a tuple with (r2_min,r2_max,r2_nb), z values are
+      taken seperatly in z_list or all z slices in df_main considered.
+
+    Returns:
+      * pd.DataFrame with r2, z, Ex[mean],Ey[mean],Ez[mean],Emod[mean],Phi[mean]
+    &#39;&#39;&#39;
+
+    # To make the rz (scatter) plot one needs the mean value of the Phi/Emod in each (r,z) coordinate instead of
+    # the individual values at each (x,y,z)
+    # We can do this by defining a grid on r,z, selecting events in each square and getting the mean.
+    # This is, however, an iterative process, not sure how to make it
+    # array-like.
+
+    # In this particular case, since the z variable is always sliced and not interpolated, only r will be
+    # re-descretized, the z slices wil be taken as the z values to compute on
+
+    r2_min, r2_max, r2_nb = r2zgridspecs
+    r2_step = (r2_max - r2_min) / r2_nb
+    r2_vals_mean = np.linspace(r2_min, r2_max, r2_nb) + \
+        np.ones(r2_nb) * r2_step / 2
+    z_vals_mean = np.unique(df_main.z)
+
+    # make the grid
+    rr2, zz = np.meshgrid(r2_vals_mean, z_vals_mean)
+
+    # initialize mean arrays
+    Emod_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Emod_mean[:] = np.nan
+    Phi_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Phi_mean[:] = np.nan
+    Ex_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ex_mean[:] = np.nan
+    Ey_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ey_mean[:] = np.nan
+    Ez_mean = np.empty((r2_nb, len(z_vals_mean)))
+    Ez_mean[:] = np.nan
+
+    # Main loop. Could it be done in array mode? Maybe, but this works and is not too slow
+    # UPDATE: It&#39;s definetly too slow, needs improvement!! (14.07.2020)
+    for _z_idx, _z in tqdm(enumerate(z_vals_mean[:-1]),
+                           &#39;Computing mean values of Field and Phi in 2D projection&#39;,
+                           total=len(z_vals_mean[:-1])):
+        for _r2_idx, _r2 in enumerate(r2_vals_mean):
+            _mask = (
+                df_main.r2 &gt;= _r2 -
+                r2_step /
+                2) &amp; (
+                df_main.r2 &lt; _r2 +
+                r2_step /
+                2) &amp; (
+                df_main.z &gt; _z -
+                0.01) &amp; (
+                df_main.z &lt; _z +
+                0.01)
+            _df = df_main[_mask]
+
+            Ex_mean[_r2_idx, _z_idx] = np.mean(_df.Ex)
+            Ey_mean[_r2_idx, _z_idx] = np.mean(_df.Ey)
+            Ez_mean[_r2_idx, _z_idx] = np.mean(_df.Ez)
+            Emod_mean[_r2_idx, _z_idx] = np.mean(_df.E_mod)
+            Phi_mean[_r2_idx, _z_idx] = np.mean(_df.Phi)
+    if return_all == True:
+        return rr2, zz, Ex_mean, Ey_mean, Ez_mean, Emod_mean, Phi_mean
+    else:
+        # Get everything in a pd.DataFrame because they&#39;re cool and ezpz
+        df_meanfield = pd.DataFrame({&#39;r2&#39;: rr2.ravel(), &#39;z&#39;: zz.ravel(), &#39;Ex&#39;: Ex_mean.ravel(&#39;F&#39;),
+                                     &#39;Ey&#39;: Ey_mean.ravel(&#39;F&#39;), &#39;Ez&#39;: Ez_mean.ravel(&#39;F&#39;), &#39;Phi&#39;: Phi_mean.ravel(&#39;F&#39;),
+                                     &#39;Emod&#39;: Emod_mean.ravel(&#39;F&#39;)})  # Why is it inverted and have to use &#39;F&#39; ordering?? No idea...
+
+        return df_meanfield</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pykefield" href="index.html">pykefield</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pykefield.process_fieldmap.get_EField_zslice" href="#pykefield.process_fieldmap.get_EField_zslice">get_EField_zslice</a></code></li>
+<li><code><a title="pykefield.process_fieldmap.get_finergrid_zslice" href="#pykefield.process_fieldmap.get_finergrid_zslice">get_finergrid_zslice</a></code></li>
+<li><code><a title="pykefield.process_fieldmap.get_interp_functions" href="#pykefield.process_fieldmap.get_interp_functions">get_interp_functions</a></code></li>
+<li><code><a title="pykefield.process_fieldmap.getphimean_zslice" href="#pykefield.process_fieldmap.getphimean_zslice">getphimean_zslice</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

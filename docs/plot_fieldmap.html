@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pykefield.plot_fieldmap API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pykefield.plot_fieldmap</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Circle, Rectangle
+
+from .common import *
+
+
+def plot_averageEF(df_main, var=&#39;mod&#39;, r2_cut_minus=0,
+                   r2_cut_plus=664**2, z_cut_minus=-1480, z_cut_plus=-9):
+    &#39;&#39;&#39;Plot the intensity of the Electric field in r2_z given a set range &#39;&#39;&#39;
+
+    V_nT = np.pi * r2_cut_plus / 100 * \
+        (z_cut_plus / 10 - z_cut_minus / 10)  # cm**3
+    d_Xe = 2.862  # g/cc
+    W_nT = d_Xe * V_nT * 0.001  # kg
+
+    _mask = (
+        df_main.r2 &gt;= r2_cut_minus) &amp; (
+        df_main.r2 &lt; r2_cut_plus) &amp; (
+            df_main.z &lt; z_cut_plus) &amp; (
+                df_main.z &gt;= z_cut_minus)
+    _df = df_main[_mask]
+    #_df[&#39;r&#39;] = np.sqrt(_df[&#39;r2&#39;])
+
+    plt.figure(figsize=(8, 7))
+    if var == &#39;mod&#39;:
+        c = _df.Emod
+    elif var == &#39;x&#39;:
+        c = _df.Ex
+    elif var == &#39;y&#39;:
+        c = _df.Ey
+    elif var == &#39;z&#39;:
+        c = _df.Ez
+    else:
+        raise ValueError(&#34;The var you&#39;re looking for is in another castle.&#34;)
+
+    plt.scatter(_df.r2, _df.z, c=c, marker=&#39;s&#39;, s=40)
+
+    plt.colorbar(label=&#39;|E| [V/mm]&#39;)
+    plt.xlabel(&#39;R2 [mm^2]&#39;)
+    plt.ylabel(&#39;Z [mm]&#39;)
+    plt.title(
+        &#39;Electric Field %s - fiducial volume: %.2f t&#39; %
+        (var, W_nT / 1000))
+    plt.text((r2_cut_plus + r2_cut_minus) / 2, (z_cut_plus + z_cut_minus) / 2,
+             &#39;Average |E|: %.2f V/mm&#39; % np.mean(c), horizontalalignment=&#39;center&#39;, fontsize=12)
+
+    plt.show()
+
+
+def plot_xy(x, y, series_to_plot, acc_grid=False, title=None, TPC_line=True):
+    fig, ax = plt.subplots(1, figsize=(10, 10))
+
+    plt.scatter(x, y, c=series_to_plot)
+    plt.title(title)
+    plt.xlabel(&#39;x [mm]&#39;)
+    plt.ylabel(&#39;y [mm]&#39;)
+    # plt.xlim(-710,710)
+    # plt.ylim(-710,710)
+    plt.colorbar(label=&#39;Potential&#39;)
+    #TPC = Rectangle((0,-1485),665**2,1485+10,color = &#39;red&#39;, fill = False,lw=2)
+    if TPC_line == True:
+        TPC = Circle(
+            (0, 0), 664, color=&#39;red&#39;, fill=False, lw=2)
+        ax.add_patch(TPC)
+    # if acc_grid == True:
+    #     low_acc_list, med_acc_list, high_acc_list = get_acc_lists()
+    #     acc_grid_list = get_acc_grid_list(low_acc_list, med_acc_list, high_acc_list)
+    #     for patch in acc_grid_list:
+    #         ax.add_patch(patch)
+    plt.gca().set_aspect(&#39;equal&#39;, adjustable=&#39;box&#39;)
+    plt.draw()
+    plt.show()
+
+    ## slice in x
+# make grid
+
+
+def plot_x_slice_perpwires(_x, func, y_min, y_max,
+                           z_min, z_max, save_fig=False):
+    &#34;&#34;&#34;Plot yz plane with perpwires.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    _y = np.linspace(y_min, y_max, 100)
+    _z = np.linspace(z_min, z_max, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_x, func.name))
+
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_xslice_%d&#39; % save_fig)
+    else:
+        plt.show()
+
+
+def plot_y_slice(_y, func, save_fig=False):
+    &#34;&#34;&#34;Plot a xz plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+    _x = np.linspace(-664, 664, 100)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_y, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.2,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_yslice_%d&#39; % save_fig)
+    else:
+        plt.show()
+
+
+def plot_z_slice(_z, func, save_fig=False):
+    &#34;&#34;&#34;Plot a Z plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.1,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+
+    _x = np.linspace(-664, 664, 100)
+    _y = np.linspace(-664, 664, 100)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_z, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_zslice_%d&#39; % save_fig)
+    else:
+        plt.show()
+
+
+def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
+    &#34;&#34;&#34;Plot an xy plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    _y = np.linspace(0, 664, 50)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
+    c_x = func((_xxx, _yyy, _zzz))
+    sclicescatter_x = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
+                                 alpha=0.6,
+                                 marker=&#39;s&#39;, s=20,
+                                 zorder=1)
+
+    _x = np.linspace(-664, 664, 100)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y_set, _z)
+    c_y = func((_xxx, _yyy, _zzz))
+    sclicescatter_y = ax.scatter(_xxx, _yyy, _zzz, c=c_y,
+                                 marker=&#39;s&#39;, s=20, alpha=0.6,
+                                 vmin=np.min(c_x), vmax=np.max(c_x),
+                                 zorder=2)
+
+    _y = np.linspace(-664, 0, 50)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
+    c_x = func((_xxx, _yyy, _zzz))
+    sclicescatter_x2 = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
+                                  alpha=0.6,
+                                  marker=&#39;s&#39;, s=20,
+                                  vmin=np.min(c_x), vmax=np.max(c_x),
+                                  zorder=3)
+
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+
+    #ax.set_title(&#39;x=%.2f; %s&#39; %(_x, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.2,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter_x, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/xy_slice_%d&#39; % save_fig)
+    else:
+        plt.show()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pykefield.plot_fieldmap.plot_averageEF"><code class="name flex">
+<span>def <span class="ident">plot_averageEF</span></span>(<span>df_main, var='mod', r2_cut_minus=0, r2_cut_plus=440896, z_cut_minus=-1480, z_cut_plus=-9)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot the intensity of the Electric field in r2_z given a set range</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_averageEF(df_main, var=&#39;mod&#39;, r2_cut_minus=0,
+                   r2_cut_plus=664**2, z_cut_minus=-1480, z_cut_plus=-9):
+    &#39;&#39;&#39;Plot the intensity of the Electric field in r2_z given a set range &#39;&#39;&#39;
+
+    V_nT = np.pi * r2_cut_plus / 100 * \
+        (z_cut_plus / 10 - z_cut_minus / 10)  # cm**3
+    d_Xe = 2.862  # g/cc
+    W_nT = d_Xe * V_nT * 0.001  # kg
+
+    _mask = (
+        df_main.r2 &gt;= r2_cut_minus) &amp; (
+        df_main.r2 &lt; r2_cut_plus) &amp; (
+            df_main.z &lt; z_cut_plus) &amp; (
+                df_main.z &gt;= z_cut_minus)
+    _df = df_main[_mask]
+    #_df[&#39;r&#39;] = np.sqrt(_df[&#39;r2&#39;])
+
+    plt.figure(figsize=(8, 7))
+    if var == &#39;mod&#39;:
+        c = _df.Emod
+    elif var == &#39;x&#39;:
+        c = _df.Ex
+    elif var == &#39;y&#39;:
+        c = _df.Ey
+    elif var == &#39;z&#39;:
+        c = _df.Ez
+    else:
+        raise ValueError(&#34;The var you&#39;re looking for is in another castle.&#34;)
+
+    plt.scatter(_df.r2, _df.z, c=c, marker=&#39;s&#39;, s=40)
+
+    plt.colorbar(label=&#39;|E| [V/mm]&#39;)
+    plt.xlabel(&#39;R2 [mm^2]&#39;)
+    plt.ylabel(&#39;Z [mm]&#39;)
+    plt.title(
+        &#39;Electric Field %s - fiducial volume: %.2f t&#39; %
+        (var, W_nT / 1000))
+    plt.text((r2_cut_plus + r2_cut_minus) / 2, (z_cut_plus + z_cut_minus) / 2,
+             &#39;Average |E|: %.2f V/mm&#39; % np.mean(c), horizontalalignment=&#39;center&#39;, fontsize=12)
+
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="pykefield.plot_fieldmap.plot_x_slice_perpwires"><code class="name flex">
+<span>def <span class="ident">plot_x_slice_perpwires</span></span>(<span>_x, func, y_min, y_max, z_min, z_max, save_fig=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot yz plane with perpwires.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_x_slice_perpwires(_x, func, y_min, y_max,
+                           z_min, z_max, save_fig=False):
+    &#34;&#34;&#34;Plot yz plane with perpwires.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    _y = np.linspace(y_min, y_max, 100)
+    _z = np.linspace(z_min, z_max, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_x, func.name))
+
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_xslice_%d&#39; % save_fig)
+    else:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="pykefield.plot_fieldmap.plot_xy"><code class="name flex">
+<span>def <span class="ident">plot_xy</span></span>(<span>x, y, series_to_plot, acc_grid=False, title=None, TPC_line=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_xy(x, y, series_to_plot, acc_grid=False, title=None, TPC_line=True):
+    fig, ax = plt.subplots(1, figsize=(10, 10))
+
+    plt.scatter(x, y, c=series_to_plot)
+    plt.title(title)
+    plt.xlabel(&#39;x [mm]&#39;)
+    plt.ylabel(&#39;y [mm]&#39;)
+    # plt.xlim(-710,710)
+    # plt.ylim(-710,710)
+    plt.colorbar(label=&#39;Potential&#39;)
+    #TPC = Rectangle((0,-1485),665**2,1485+10,color = &#39;red&#39;, fill = False,lw=2)
+    if TPC_line == True:
+        TPC = Circle(
+            (0, 0), 664, color=&#39;red&#39;, fill=False, lw=2)
+        ax.add_patch(TPC)
+    # if acc_grid == True:
+    #     low_acc_list, med_acc_list, high_acc_list = get_acc_lists()
+    #     acc_grid_list = get_acc_grid_list(low_acc_list, med_acc_list, high_acc_list)
+    #     for patch in acc_grid_list:
+    #         ax.add_patch(patch)
+    plt.gca().set_aspect(&#39;equal&#39;, adjustable=&#39;box&#39;)
+    plt.draw()
+    plt.show()
+
+    ## slice in x</code></pre>
+</details>
+</dd>
+<dt id="pykefield.plot_fieldmap.plot_xy_slice"><code class="name flex">
+<span>def <span class="ident">plot_xy_slice</span></span>(<span>_x_set, _y_set, func, save_fig=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot an xy plane.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
+    &#34;&#34;&#34;Plot an xy plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    _y = np.linspace(0, 664, 50)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
+    c_x = func((_xxx, _yyy, _zzz))
+    sclicescatter_x = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
+                                 alpha=0.6,
+                                 marker=&#39;s&#39;, s=20,
+                                 zorder=1)
+
+    _x = np.linspace(-664, 664, 100)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y_set, _z)
+    c_y = func((_xxx, _yyy, _zzz))
+    sclicescatter_y = ax.scatter(_xxx, _yyy, _zzz, c=c_y,
+                                 marker=&#39;s&#39;, s=20, alpha=0.6,
+                                 vmin=np.min(c_x), vmax=np.max(c_x),
+                                 zorder=2)
+
+    _y = np.linspace(-664, 0, 50)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
+    c_x = func((_xxx, _yyy, _zzz))
+    sclicescatter_x2 = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
+                                  alpha=0.6,
+                                  marker=&#39;s&#39;, s=20,
+                                  vmin=np.min(c_x), vmax=np.max(c_x),
+                                  zorder=3)
+
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+
+    #ax.set_title(&#39;x=%.2f; %s&#39; %(_x, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.2,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter_x, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/xy_slice_%d&#39; % save_fig)
+    else:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="pykefield.plot_fieldmap.plot_y_slice"><code class="name flex">
+<span>def <span class="ident">plot_y_slice</span></span>(<span>_y, func, save_fig=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot a xz plane.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_y_slice(_y, func, save_fig=False):
+    &#34;&#34;&#34;Plot a xz plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+    _x = np.linspace(-664, 664, 100)
+    _z = np.linspace(-1500, -20, 200)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_y, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.2,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_yslice_%d&#39; % save_fig)
+    else:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="pykefield.plot_fieldmap.plot_z_slice"><code class="name flex">
+<span>def <span class="ident">plot_z_slice</span></span>(<span>_z, func, save_fig=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot a Z plane.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_z_slice(_z, func, save_fig=False):
+    &#34;&#34;&#34;Plot a Z plane.&#34;&#34;&#34;
+    fig = plt.figure(figsize=(12, 14))
+    ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+
+    # Cylinder
+    theta_TPC = np.linspace(0, 2 * np.pi, 500)
+    z_TPC_lin = np.linspace(-1500, 0, 1000)
+    x_TPC = r_TPC * 1000 * \
+        np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    y_TPC = r_TPC * 1000 * \
+        np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
+    z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
+    # Draw parameters
+    rstride = 20
+    cstride = 10
+    ax.plot_surface(
+        x_TPC,
+        y_TPC,
+        z_TPC,
+        alpha=0.1,
+        rstride=rstride,
+        cstride=cstride,
+        color=&#39;blue&#39;)
+    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = &#39;blue&#39;)
+    ax.set_xlabel(&#34;X&#34;)
+    ax.set_ylabel(&#34;Y&#34;)
+    ax.set_zlabel(&#34;Z&#34;)
+
+    _x = np.linspace(-664, 664, 100)
+    _y = np.linspace(-664, 664, 100)
+    _xxx, _yyy, _zzz = np.meshgrid(_x, _y, _z)
+    sclicescatter = ax.scatter(
+        _xxx, _yyy, _zzz, c=func(
+            (_xxx, _yyy, _zzz)), marker=&#39;s&#39;, s=20)
+    ax.set_xlim(-700, 700)
+    ax.set_ylim(-700, 700)
+    ax.set_zlim(-1510, 20)
+    ax.set_title(&#39;x=%.2f; %s&#39; % (_z, func.name))
+    # _TPC_rect = Rectangle((-r_TPC*1000,-1500),
+    #                                         r_TPC*1000*2,1510,
+    #                                         color = &#39;k&#39;, fill = False,lw=2, alpha =0.8, label = &#39;TPC&#39;)
+    # ax.add_patch(_TPC_rect)
+    # plt.colorbar()
+
+    if func.name == &#39;Phi&#39;:
+        cbar_label = &#39;%s [V]&#39; % func.name
+    else:
+        cbar_label = &#39;%s [V/mm]&#39; % func.name
+    cbar = fig.colorbar(sclicescatter, shrink=0.5, label=cbar_label)
+
+    if save_fig != False:
+        plt.savefig(&#39;./figures/animation_zslice_%d&#39; % save_fig)
+    else:
+        plt.show()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pykefield" href="index.html">pykefield</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pykefield.plot_fieldmap.plot_averageEF" href="#pykefield.plot_fieldmap.plot_averageEF">plot_averageEF</a></code></li>
+<li><code><a title="pykefield.plot_fieldmap.plot_x_slice_perpwires" href="#pykefield.plot_fieldmap.plot_x_slice_perpwires">plot_x_slice_perpwires</a></code></li>
+<li><code><a title="pykefield.plot_fieldmap.plot_xy" href="#pykefield.plot_fieldmap.plot_xy">plot_xy</a></code></li>
+<li><code><a title="pykefield.plot_fieldmap.plot_xy_slice" href="#pykefield.plot_fieldmap.plot_xy_slice">plot_xy_slice</a></code></li>
+<li><code><a title="pykefield.plot_fieldmap.plot_y_slice" href="#pykefield.plot_fieldmap.plot_y_slice">plot_y_slice</a></code></li>
+<li><code><a title="pykefield.plot_fieldmap.plot_z_slice" href="#pykefield.plot_fieldmap.plot_z_slice">plot_z_slice</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
