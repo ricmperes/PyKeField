@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Circle, Rectangle
+from matplotlib.ticker import FuncFormatter
+import pandas as pd
 
 from .common import *
 
@@ -221,36 +223,39 @@ def plot_z_slice(_z, func, save_fig=False):
 
 
 def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
-    """Plot an xy plane."""
+    """Plot xz and yz planes at a given crossing a."""
     fig = plt.figure(figsize=(12, 14))
     ax = fig.add_subplot(111, projection='3d')
 
-    _y = np.linspace(0, 664, 50)
+    _y = np.linspace(_y_set, 664, 50)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
     c_x = func((_xxx, _yyy, _zzz))
-    sclicescatter_x = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
-                                 alpha=0.6,
-                                 marker='s', s=20,
-                                 zorder=1)
+    sclicescatter_x = ax.scatter(_xxx, _yyy, _zzz, 
+                                 c=c_x, marker='s',
+                                 vmin=np.nanmin(c_x), 
+                                 vmax=np.nanmax(c_x),
+                                 s=20, zorder=1)
 
     _x = np.linspace(-664, 664, 100)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x, _y_set, _z)
     c_y = func((_xxx, _yyy, _zzz))
     sclicescatter_y = ax.scatter(_xxx, _yyy, _zzz, c=c_y,
-                                 marker='s', s=20, alpha=0.6,
-                                 vmin=np.min(c_x), vmax=np.max(c_x),
+                                 marker='s', s=20,
+                                 vmin=np.nanmin(c_x), 
+                                 vmax=np.nanmax(c_x),
                                  zorder=2)
 
-    _y = np.linspace(-664, 0, 50)
+    _y = np.linspace(-664, _y_set, 50)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
     c_x = func((_xxx, _yyy, _zzz))
-    sclicescatter_x2 = ax.scatter(_xxx, _yyy, _zzz, c=c_x,
-                                  alpha=0.6,
-                                  marker='s', s=20,
-                                  vmin=np.min(c_x), vmax=np.max(c_x),
+    sclicescatter_x2 = ax.scatter(_xxx, _yyy, _zzz, 
+                                  c=c_x, marker='s', 
+                                  s=20, 
+                                  vmin=np.nanmin(c_x), 
+                                  vmax=np.nanmax(c_x), 
                                   zorder=3)
 
     ax.set_xlim(-700, 700)
@@ -299,3 +304,149 @@ def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
         plt.savefig('./figures/xy_slice_%d' % save_fig)
     else:
         plt.show()
+
+
+
+def plot_average_phi(rr2: np.ndarray, zz: np.ndarray, 
+                     Phi_mean: np.ndarray, figax = None,
+                     save_fig = False):
+    if figax is None:
+        fig, ax = plt.subplots(1,1,figsize = (6,6))
+    else:
+        fig, ax = figax
+
+    c = Phi_mean.ravel('F')
+
+    sct = ax.scatter(rr2.ravel(),
+                     zz.ravel(),
+                     c= c,
+                     marker = 's', s = 12,
+                     )
+
+    lines = np.arange(-30000,0,1000)
+    ax.contour(rr2, zz, Phi_mean.T, lines, 
+            alpha = 0.5,  linewidths  = 1,
+            colors = 'k')
+    
+    rect_tpc = Rectangle((0,fiducial_4t_zmin),
+                        fiducial_4t_r**2,
+                        fiducial_4t_zmax-fiducial_4t_zmin, 
+                        color = 'yellow', 
+                        lw = 2, fill = False,
+                        zorder = 10,
+                        label = '4t fiducial cylinder')
+
+
+    ax.set_xlim(0,(r_TPC)**2)
+    #xticks_linear = np.array([0,200,300,400,500,600])
+    #ax.set_xticks(xticks_linear**2, xticks_linear)
+    ax.set_xlabel('r$^2$ [mm]$^2$')
+
+    ax.set_ylim(-1490, -15)
+    ax.set_ylabel('z [mm]')
+
+    ax.add_patch(rect_tpc)
+    #ax.legend(loc = 'upper left')
+    cbar = fig.colorbar(sct, label = 'E. potential [kV]')
+    cbar.set_ticks(np.linspace(np.nanmin(c), np.nanmax(c), 7))
+    cbar.set_ticklabels(np.linspace(-30, 0, 7))
+    
+    if isinstance(save_fig, str):
+        fig.savefig(save_fig)
+    else:
+        return fig, ax
+
+
+def plot_average_efield(rr2: np.ndarray, 
+                        zz: np.ndarray, 
+                        EE: np.ndarray,
+                        df_meanfield: pd.DataFrame, 
+                        efieldtype:str = 'Ez',
+                        fidcolor: bool = False,
+                        figax: tuple = None,
+                        colorlabel = '',
+                        save_fig: str = False):
+    if figax is None:
+        fig, ax = plt.subplots(1,1,figsize = (6,6))
+    else:
+        fig, ax = figax
+
+    if fidcolor == True:
+        _fiducial_df_meanfield = df_meanfield[
+            (df_meanfield['r2'] < (fiducial_4t_r)**2) &
+            (df_meanfield['z'] > fiducial_4t_zmin) & 
+            (df_meanfield['z'] < fiducial_4t_zmax)
+            ]
+
+        sct = ax.scatter(df_meanfield['r2'],
+                 df_meanfield['z'],
+                 c = df_meanfield[efieldtype]*10,
+                 vmin = min(_fiducial_df_meanfield[efieldtype])*10, 
+                 vmax = max(_fiducial_df_meanfield[efieldtype])*10, 
+                 marker = 's', s = 12, cmap = 'viridis')
+    else:
+        sct = ax.scatter(df_meanfield['r2'],
+                         df_meanfield['z'],
+                         c = df_meanfield[efieldtype]*10,
+                         marker = 's', s = 12)
+    
+    manual_locations = [(100000, -280), (100000, -500), (100000, -1000), 
+                        (100000, -1150), (100000, -1300), (200000, -180),
+                        (300000, -500)]
+    
+    if efieldtype == 'Emod':
+        lines = np.linspace(175,190,4)
+        contour = ax.contour(rr2, zz, EE.T*10, lines,
+                                alpha = 0.8,  linewidths  = 1,
+                                colors = 'k')
+        ax.clabel(contour, contour.levels, inline=True, 
+                    fmt = fmt_contour, fontsize = 8,
+                    manual = manual_locations, inline_spacing = 20)
+
+    elif efieldtype == 'Ez':
+        lines = np.linspace(-190,-175,4)
+    
+        contour = ax.contour(rr2, zz, EE.T*10, lines,
+                                alpha = 0.8,  linewidths  = 1,
+                                colors = 'k')
+        ax.clabel(contour, contour.levels, inline=True, 
+                    fmt = fmt_contour, fontsize = 8,
+                    manual = manual_locations, inline_spacing = 20)
+
+    rect_tpc = Rectangle((0,fiducial_4t_zmin),
+                        fiducial_4t_r**2,
+                        fiducial_4t_zmax-fiducial_4t_zmin, 
+                        color = 'yellow', 
+                        lw = 2, fill = False,
+                        zorder = 10,
+                        label = '4t fiducial cylinder')
+
+
+    ax.set_xlim(0,(r_TPC)**2)
+
+    ax.set_xlabel('r$^2$ [mm]$^2$')
+
+    ax.set_ylim(-1490, -15)
+    ax.set_ylabel('z [mm]')
+
+    ax.add_patch(rect_tpc)
+
+    cbar = fig.colorbar(sct, label = colorlabel)
+    # cbar.set_ticks(np.linspace(np.nanmin(c), np.nanmax(c), 7))
+    # cbar.set_ticklabels(
+    #     [fmt_colorlabel(boop) for boop in np.linspace(np.nanmin(c)*10, 
+    #                                                   np.nanmax(c)*10, 
+    #                                                   7)
+    #     ])
+
+    
+    if isinstance(save_fig, str):
+        fig.savefig(save_fig)
+    else:
+        return fig, ax
+
+def fmt_colorlabel(x):
+    return f'{x:.1f}'
+
+def fmt_contour(x):
+    return f'{x*10:.1f} V/cm'
