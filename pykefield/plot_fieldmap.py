@@ -222,15 +222,19 @@ def plot_z_slice(_z, func, save_fig=False):
         plt.show()
 
 
-def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
+def plot_xy_slice(_x_set, _y_set, func, cbar_on = True, 
+                  axcbar = None, save_fig=False, figax = None):
     """Plot xz and yz planes at a given crossing a."""
-    fig = plt.figure(figsize=(12, 14))
-    ax = fig.add_subplot(111, projection='3d')
+    if figax is None:
+        fig = plt.figure(figsize=(12, 14))
+        ax = fig.add_subplot(111, projection='3d')
+    else:
+        fig, ax = figax
 
     _y = np.linspace(_y_set, 664, 50)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
-    c_x = func((_xxx, _yyy, _zzz))
+    c_x = func((_xxx, _yyy, _zzz)) *1e-3
     sclicescatter_x = ax.scatter(_xxx, _yyy, _zzz, 
                                  c=c_x, marker='s',
                                  vmin=np.nanmin(c_x), 
@@ -240,7 +244,7 @@ def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
     _x = np.linspace(-664, 664, 100)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x, _y_set, _z)
-    c_y = func((_xxx, _yyy, _zzz))
+    c_y = func((_xxx, _yyy, _zzz)) *1e-3
     sclicescatter_y = ax.scatter(_xxx, _yyy, _zzz, c=c_y,
                                  marker='s', s=20,
                                  vmin=np.nanmin(c_x), 
@@ -250,7 +254,7 @@ def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
     _y = np.linspace(-664, _y_set, 50)
     _z = np.linspace(-1500, -20, 200)
     _xxx, _yyy, _zzz = np.meshgrid(_x_set, _y, _z)
-    c_x = func((_xxx, _yyy, _zzz))
+    c_x = func((_xxx, _yyy, _zzz)) *1e-3
     sclicescatter_x2 = ax.scatter(_xxx, _yyy, _zzz, 
                                   c=c_x, marker='s', 
                                   s=20, 
@@ -273,9 +277,9 @@ def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
     theta_TPC = np.linspace(0, 2 * np.pi, 500)
     z_TPC_lin = np.linspace(-1500, 0, 1000)
 
-    x_TPC = r_TPC * 1000 * \
+    x_TPC = r_TPC * \
         np.outer(np.cos(theta_TPC), np.ones(np.size(z_TPC_lin)))
-    y_TPC = r_TPC * 1000 * \
+    y_TPC = r_TPC * \
         np.outer(np.sin(theta_TPC), np.ones(np.size(z_TPC_lin)))
     z_TPC = np.outer(np.ones(np.size(theta_TPC)), z_TPC_lin)
 
@@ -292,18 +296,25 @@ def plot_xy_slice(_x_set, _y_set, func, save_fig=False):
         color='blue')
     #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = 'blue')
 
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Z")
+    ax.set_xlabel("X [mm]")
+    ax.set_ylabel("Y [mm]")
+    ax.set_zlabel("Z [mm]")
     if func.name == 'Phi':
-        cbar_label = '%s [V]' % func.name
+        cbar_label = 'Potential [kV]'
     else:
         cbar_label = '%s [V/mm]' % func.name
-    cbar = fig.colorbar(sclicescatter_x, shrink=0.5, label=cbar_label)
+    
+    if cbar_on:
+        if axcbar is not None:
+            cbar = fig.colorbar(sclicescatter_x, shrink=0.3, label=cbar_label,
+                            location = 'right', cax = axcbar,pad=0.2)
+        else:
+            cbar = fig.colorbar(sclicescatter_x, shrink=0.3, label=cbar_label,
+                                location = 'right',pad=0.2)
     if save_fig != False:
         plt.savefig('./figures/xy_slice_%d' % save_fig)
     else:
-        plt.show()
+        return fig, ax
 
 
 
@@ -344,10 +355,11 @@ def plot_average_phi(rr2: np.ndarray, zz: np.ndarray,
 
     ax.set_ylim(-1490, -15)
     ax.set_ylabel('z [mm]')
-
+    ax.ticklabel_format(style='sci', axis='x', 
+                        scilimits=(0,0), useMathText=True)
     ax.add_patch(rect_tpc)
     #ax.legend(loc = 'upper left')
-    cbar = fig.colorbar(sct, label = 'E. potential [kV]')
+    cbar = fig.colorbar(sct, label = 'Potential [kV]')
     cbar.set_ticks(np.linspace(np.nanmin(c), np.nanmax(c), 7))
     cbar.set_ticklabels(np.linspace(-30, 0, 7))
     
@@ -383,7 +395,7 @@ def plot_average_efield(rr2: np.ndarray,
                  c = df_meanfield[efieldtype]*10,
                  vmin = min(_fiducial_df_meanfield[efieldtype])*10, 
                  vmax = max(_fiducial_df_meanfield[efieldtype])*10, 
-                 marker = 's', s = 12, cmap = 'viridis')
+                 marker = 's', s = 12)
     else:
         sct = ax.scatter(df_meanfield['r2'],
                          df_meanfield['z'],
@@ -425,7 +437,8 @@ def plot_average_efield(rr2: np.ndarray,
     ax.set_xlim(0,(r_TPC)**2)
 
     ax.set_xlabel('r$^2$ [mm]$^2$')
-
+    ax.ticklabel_format(style='sci', axis='x', 
+                        scilimits=(0,0), useMathText=True)
     ax.set_ylim(-1490, -15)
     ax.set_ylabel('z [mm]')
 
@@ -449,4 +462,4 @@ def fmt_colorlabel(x):
     return f'{x:.1f}'
 
 def fmt_contour(x):
-    return f'{x*10:.1f} V/cm'
+    return f'{x:.1f} V/cm'

@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
-from .utils import get_radius, get_theta
+from .utils import get_radius, get_theta, get_xy
 
 
 def make_streamline(func_3d, start, dL=0.1,
@@ -73,17 +74,20 @@ def make_streamline(func_3d, start, dL=0.1,
         _r_next_radius = get_radius(_r_next[0], _r_next[1])
 
         if output == 'streamline':
-            df_streamline = df_streamline.append(
-                {'x': _r_next[0],
-                 'y': _r_next[1],
-                 'z': _r_next[2],
-                 'Ex': np.float64(Ex_3d(_r_next)),
-                 'Ey': np.float64(Ey_3d(_r_next)),
-                 'Ez': np.float64(Ez_3d(_r_next)),
-                 'Emod': np.float64(Emod_3d(_r_next)),
-                 'r': _r_next_radius
-                }, ignore_index=True)
+            df_streamline = pd.concat(
+                [df_streamline, pd.DataFrame(
+                    {'x': [_r_next[0]],
+                     'y': [_r_next[1]],
+                     'z': [_r_next[2]],
+                     'Ex': [np.float64(Ex_3d(_r_next))],
+                     'Ey': [np.float64(Ey_3d(_r_next))],
+                     'Ez': [np.float64(Ez_3d(_r_next))],
+                     'Emod': [np.float64(Emod_3d(_r_next))],
+                     'r': [_r_next_radius]
+                    })], 
+                ignore_index=True)
 
+       
         out_of_bounds_gate, out_of_bounds_wall = bool_out_of_bounds(
             _r_next, active_boundaries, boundary_type)
 
@@ -155,8 +159,8 @@ def bool_out_of_bounds(r, active_boundaries, boundary_type):
 
     if boundary_type == 'rz':
         ans_gate = z > active_boundaries[3]
-        ans_wall = ((r < active_boundaries[0]) or
-                    (r > active_boundaries[1]))
+        ans_wall = ((radius < active_boundaries[0]) or
+                    (radius > active_boundaries[1]))
 
     elif boundary_type == 'xyz':
         x_min, x_max, y_min, y_max, z_min, z_max = active_boundaries
@@ -186,3 +190,34 @@ def get_next_r_streamline(_r, func_3d, dL, direction):
     n_vec = np.concatenate((n_x, n_y, n_z))
     _r_next = _r + n_vec * dL * direction
     return _r_next
+
+def make_streamlist_xzplane(func_3d, y_plane = 0):
+    streamlist_xzplane = []
+    _x = np.linspace(-640,640,50)
+    for _x_val in tqdm(_x):
+        _stream = make_streamline(func_3d,start = (_x_val,y_plane,-1430), dL=10,
+                            active_boundaries = (0,650,-1480.3,-20),
+                            v = False,output = 'streamline')
+        streamlist_xzplane.append(_stream)
+    return streamlist_xzplane
+
+
+
+def make_streamlist_radial(N_r, N_theta, func_3d):
+    streamlist = []
+    _rs = np.linspace(100,645,N_r)
+    _thetas = np.linspace(0,2*np.pi, N_theta+1)
+
+    for _r in tqdm(_rs):
+        for _t in tqdm(_thetas, total = len(_thetas),leave=False):
+            x,y = get_xy(_r, _t)
+            try:
+                _stream = make_streamline(
+                func_3d,start = (x,y,-1460), dL=10,
+                active_boundaries = (0,660,-1490.3,-50),
+                v = False,output = 'streamline')
+                streamlist.append(_stream)
+            except:
+                print('Problem at point starting from (',x,y,-1460,')')
+
+    return streamlist

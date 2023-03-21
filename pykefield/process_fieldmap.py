@@ -147,29 +147,30 @@ def get_EField_zslice(df_main, z_list=None,
 def getphimean_zslice(df_main, z_list=None,
                       r2zgridspecs=(0., 666.**2, 200),
                       return_all=False):
-    '''Given a data frame witht he EF and Phi calculated in a set of
+    '''Given a data frame witht the EF and Phi calculated in a set of
     points (grid, preferably), returns the correspondent 2D mean values
     in R2Z space in a dataset.
 
     Arguments:
       * df_main - the pd.DataFrame with r2,z,Ex,Ey,Ez,E_mod,Phi.
-      * z_list - list of z value to consider. distance more than 0.1mm or
+      * z_list - list of z value to consider. distance more than 0.1 mm or
       does not handle correctly.
-      * r2gridspecs - a tuple with (r2_min,r2_max,r2_nb), z values are
+      * r2gridspecs - a tuple with (r2_min, r2_max, r2_nb), z values are
       taken seperatly in z_list or all z slices in df_main considered.
 
     Returns:
       * pd.DataFrame with r2, z, Ex[mean],Ey[mean],Ez[mean],Emod[mean],Phi[mean]
     '''
 
-    # To make the rz (scatter) plot one needs the mean value of the Phi/Emod in each (r,z) coordinate instead of
-    # the individual values at each (x,y,z)
-    # We can do this by defining a grid on r,z, selecting events in each square and getting the mean.
-    # This is, however, an iterative process, not sure how to make it
-    # array-like.
+    # To make the rz (scatter) plot one needs the mean value of the Phi/Emod 
+    # in each (r,z) coordinate instead of the individual values at each 
+    # (x,y,z). We can do this by defining a grid on r,z, selecting events 
+    # in each square and getting the mean. This is, however, an iterative 
+    # process, not sure how to make it array-like.
 
-    # In this particular case, since the z variable is always sliced and not interpolated, only r will be
-    # re-descretized, the z slices wil be taken as the z values to compute on
+    # In this particular case, since the z variable is always sliced and 
+    # not interpolated, only r will be re-descretized, the z slices will 
+    # be taken as the z values to compute on.
 
     r2_min, r2_max, r2_nb = r2zgridspecs
     r2_step = (r2_max - r2_min) / r2_nb
@@ -192,7 +193,8 @@ def getphimean_zslice(df_main, z_list=None,
     Ez_mean = np.empty((r2_nb, len(z_vals_mean)))
     Ez_mean[:] = np.nan
 
-    # Main loop. Could it be done in array mode? Maybe, but this works and is not too slow
+    # Main loop. Could it be done in array mode? Maybe, but this works and 
+    # is not too slow.
     # UPDATE: It's definetly too slow, needs improvement!! (14.07.2020)
     for _z_idx, _z in tqdm(enumerate(z_vals_mean[:-1]),
                            'Computing mean values of Field and Phi in 2D projection',
@@ -220,9 +222,15 @@ def getphimean_zslice(df_main, z_list=None,
         return rr2, zz, Ex_mean, Ey_mean, Ez_mean, Emod_mean, Phi_mean
     else:
         # Get everything in a pd.DataFrame because they're cool and ezpz
-        df_meanfield = pd.DataFrame({'r2': rr2.ravel(), 'z': zz.ravel(), 'Ex': Ex_mean.ravel('F'),
-                                     'Ey': Ey_mean.ravel('F'), 'Ez': Ez_mean.ravel('F'), 'Phi': Phi_mean.ravel('F'),
-                                     'Emod': Emod_mean.ravel('F')})  # Why is it inverted and have to use 'F' ordering?? No idea...
+        df_meanfield = pd.DataFrame(
+            {'r2': rr2.ravel(), 
+             'z': zz.ravel(), 
+             'Ex': Ex_mean.ravel('F'),
+             'Ey': Ey_mean.ravel('F'), 
+             'Ez': Ez_mean.ravel('F'), 
+             'Phi': Phi_mean.ravel('F'),
+             'Emod': Emod_mean.ravel('F')
+            })  # Why is it inverted and have to use 'F' ordering?? No idea...
 
         return df_meanfield
 
