@@ -149,7 +149,7 @@ def plot_y_slice(_y, func, save_fig=False):
         rstride=rstride,
         cstride=cstride,
         color='blue')
-    #ax.plot_surface(Xc_TPC, -Yc_TPC, Zc_TPC, alpha=0.2, rstride=rstride, cstride=cstride,  color = 'blue')
+    
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")

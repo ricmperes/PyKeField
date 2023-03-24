@@ -131,8 +131,9 @@ def get_anode_wires_y(y_min, y_max, y_reference_anode=-0.01304 * 1000):
     too lazy right now to solve but shoudl be fine for ploting.
     Cheers!'''
 
-    return np.concatenate(np.sort(np.arange(y_reference_anode, y_min, -5)),
-                          np.sort(np.arange(y_reference_anode, y_max, 5)))
+    return np.concatenate((np.sort(np.arange(y_reference_anode, y_min, -5)),
+                           np.sort(np.arange(y_reference_anode, y_max, 5))
+                          ))
 
 
 def get_gate_wires_y(y_min, y_max, y_reference_gate=0.007824 * 1000):
@@ -143,5 +144,6 @@ def get_gate_wires_y(y_min, y_max, y_reference_gate=0.007824 * 1000):
     too lazy right now to solve but shoudl be fine for ploting.
     Cheers!'''
 
-    return np.concatenate(np.sort(np.arange(y_reference_gate, y_min, -5)),
-                          np.sort(np.arange(y_reference_gate, y_max, 5)))
+    return np.concatenate((np.sort(np.arange(y_reference_gate, y_min, -5)),
+                           np.sort(np.arange(y_reference_gate, y_max, 5))
+                           ))
